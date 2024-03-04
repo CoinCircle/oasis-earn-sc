@@ -1,6 +1,6 @@
 import './bootstrap-env'
 import 'tsconfig-paths/register'
-import '@nomiclabs/hardhat-etherscan'
+import '@nomicfoundation/hardhat-verify'
 import '@nomiclabs/hardhat-waffle'
 import 'hardhat-gas-reporter'
 import '@typechain/hardhat'
@@ -20,6 +20,7 @@ import { filterConsole, getForkedNetworkConfig } from './utils'
 // removed, but it seems that our Hardhat version is still using Ethers.js 5.
 filterConsole(['duplicate definition -'], { methods: ['log'] })
 
+// tdly.setup({ automaticVerifications: true })
 tdly.setup()
 
 const forkConfig = getForkedNetworkConfig()
@@ -91,7 +92,7 @@ const config = {
   },
   networks: {
     tenderly: {
-      url: 'https://rpc.tenderly.co/fork/6629361a-f4a9-48c9-9bf4-0a83da275a7c',
+      url: process.env.TENDERLY_FORK_URL ?? '',
       accounts: [
         '0xe4966abd3595e37f1d9313616d9a833fdbde301f70b61eb17cb7e919ca0addd8',
         '0x8a78506679446be6dc846c7dddbbee4b5f0ae725caa50126739e0851d66a29c8',
@@ -278,8 +279,8 @@ const config = {
     ],
   },
   tenderly: {
-    username: 'oazoapps', // tenderly username (or organization name)
-    project: process.env.TENDERLY_PROJECT ?? '', // project name
+    username: 'rlcooper', // tenderly username (or organization name)
+    project: 'project', // project name
     privateVerification: true, // if true, contracts will be verified privately, if false, contracts will be verified publicly
   },
 }

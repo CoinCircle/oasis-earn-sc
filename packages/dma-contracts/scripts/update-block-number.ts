@@ -45,5 +45,8 @@ const updateNumber = () => {
       }
       console.log('')
     })
+    .catch(error => {
+      console.error('❌ Could not fetch block height', error)
+    });
 }
 updateNumber()

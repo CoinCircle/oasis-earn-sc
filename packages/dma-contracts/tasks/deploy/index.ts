@@ -5,6 +5,11 @@ import { task } from 'hardhat/config'
 
 task('deploy', 'Deploy the system to a local node.').setAction(
   async (taskArgs: { configExtensionPath: string }, hre) => {
+    console.log(`
+    ===========
+    deploying
+    ===========
+    `)
     const ds = new DeploymentSystem(hre)
     await ds.init()
     const network = await getUnderlyingNetwork(hre.ethers.provider)
@@ -24,18 +29,33 @@ task('deploy', 'Deploy the system to a local node.').setAction(
     const swapConfigPath = './test/swap.conf.ts'
     await ds.extendConfig(swapConfigPath)
 
+    console.log('===== DEPLOY ALL ======')
     await ds.deployAll()
-    // await ds.addAllEntries()
-    await ds.addCommonEntries()
-    await ds.addAaveEntries()
-    await ds.addOperationEntries()
-
+    // console.log('instantiating....')
+    // await ds.instantiate()
+    console.log('===== ADD ALL ENTRIES ======')
+    await ds.addAllEntries().catch(e => {
+      console.error('failed addAllEntries', e)
+    })
+    console.log('===== ADD OPERATION ENTRIES ======')
+    await ds.addOperationEntries().catch(e => {
+      console.error('failed addOperationEntries', e)
+    })
+    await ds.saveConfig()
     const dsSystem = ds.getSystem()
     const { system } = dsSystem
-    // const swapContract = system.uSwap ? system.uSwap.contract : system.Swap.contract
-    //
-    // await swapContract.addFeeTier(0)
-    // await swapContract.addFeeTier(7)
-    await system.AccountGuard.contract.setWhitelist(system.OperationExecutor.contract.address, true)
+    const swapContract = system.uSwap ? system.uSwap.contract : system.Swap.contract
+    await swapContract.addFeeTier(0).catch(e => {
+      console.error('failed addFeeTier', e)
+    })
+    await swapContract.addFeeTier(7).catch(e => {
+      console.error('failed addFeeTier', e)
+    })
+    await system.AccountGuard.contract
+      .setWhitelist(system.OperationExecutor.contract.address, true)
+      .catch(e => {
+        console.error('failed setWhitelist', e)
+      })
+    await ds.verifyAllContracts()
   },
 )

@@ -26,6 +26,13 @@ task('getTokens', '')
       : Object.entries(tokens)
 
     const entryBalance = await signer.getBalance()
+    if (taskArgs.to) {
+      const tx = await signer.sendTransaction({
+        to: recipient,
+        value: hre.ethers.utils.parseEther('15'),
+      })
+      console.log({ tx })
+    }
 
     console.log(`Entry balance of account: ${entryBalance.toString()}`)
 

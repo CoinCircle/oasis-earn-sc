@@ -37,5 +37,6 @@ import './tasks/get-action-name'
 import './tasks/service-registry'
 import './tasks/operations-registry'
 import './tasks/ownership-tool'
+import './tasks/fast-forward'
 
 export { default } from './hardhat.config.base'

@@ -3,7 +3,7 @@ import { Network } from '@deploy-configurations/types/network'
 export function loadContractNames(network: Network) {
   let loadedConfig
 
-  if (network === Network.MAINNET) {
+  if (network === Network.MAINNET || network === Network.TENDERLY) {
     loadedConfig = require('./contract-names.mainnet')
   } else if (network === Network.OPTIMISM) {
     loadedConfig = require('./contract-names.optimism')

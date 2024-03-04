@@ -7,9 +7,10 @@
     "start:ajna": "npx hardhat node --hostname 0.0.0.0",
     "init:ajna": "yarn hardhat test test/e2e/strategies/ajna/open.test.ts --network local",
     "dev": "yarn dev:mainnet",
-    "dev:mainnet": "yarn ts-node scripts/update-block-number.ts && yarn hardhat node --max-memory 8192 --fork $(grep MAINNET_URL ../../.env | cut -d '=' -f2)",
-    "dev:optimism": "yarn ts-node scripts/update-block-number.ts && yarn hardhat node --max-memory 8192 --fork $(grep OPTIMISM_URL ../../.env | cut -d '=' -f2)",
-    "deploy:dev": "yarn compile && yarn hardhat deploy --network local",
+    "dev:mainnet": "yarn ts-node scripts/update-block-number.ts && yarn hardhat node --max-memory 20192 --fork $(grep MAINNET_URL ../../.env | cut -d '=' -f2)",
+    "dev:optimism": "yarn ts-node scripts/update-block-number.ts && yarn hardhat node --max-memory 20192 --fork $(grep OPTIMISM_URL ../../.env | cut -d '=' -f2)",
+    "deploy:dev": "yarn compile && yarn hardhat deploy --network mainnet",
+    "deploy:devnet": "yarn compile && yarn hardhat deploy --network devnet ",
     "compile": "npx hardhat --config hardhat.config.base.ts compile",
     "clean": "rm -rf ./typechain && rm -rf ./artifacts && rm -rf ./cache",
     "format": "prettier --write contracts/**/*.sol tasks/**/*.ts test/**/*.ts scripts/**/*.ts && yarn lint:fix",
@@ -42,8 +43,9 @@
     "tsconfig.json"
   ],
   "devDependencies": {
-    "@prb/math": "2.5.0",
     "@inquirer/prompts": "^3.2.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.1",
+    "@prb/math": "2.5.0",
     "@tenderly/hardhat-tenderly": "^1.7.7",
     "console-log-colors": "^0.4.0",
     "inquirer": "^8.0.0"

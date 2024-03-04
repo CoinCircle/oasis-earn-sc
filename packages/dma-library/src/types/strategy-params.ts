@@ -2,7 +2,7 @@ import { Address } from '@deploy-configurations/types/address'
 import { Network } from '@deploy-configurations/types/network'
 import { AaveLikeStrategyAddresses } from '@dma-library/operations/aave-like'
 import { AaveProtocolData } from '@dma-library/protocols'
-import { AaveLikeTokens } from '@dma-library/types/aave-like'
+import { AaveLikePosition, AaveLikeTokens } from '@dma-library/types/aave-like'
 import { AaveLikeProtocol } from '@dma-library/types/protocol'
 import { IPosition, IRiskRatio } from '@domain'
 import BigNumber from 'bignumber.js'
@@ -102,7 +102,7 @@ export type WithDebtChange<Tokens> = {
 
 type SharedStrategyDependencies = {
   provider: providers.Provider
-  currentPosition: IPosition
+  currentPosition: AaveLikePosition
   proxy: Address
   user: Address
   network: Network

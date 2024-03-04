@@ -478,6 +478,7 @@ export class DeploymentSystem extends DeployedSystemHelpers {
   }
 
   async addRegistryEntries(addressesConfig: ConfigEntry[]) {
+    console.log('ADD REGISTRY ENTRIES', JSON.stringify(addressesConfig, null, 2));
     if (!this.serviceRegistryHelper) throw new Error('No service registry helper set')
     for (const configItem of addressesConfig) {
       if (configItem.serviceRegistryName) {
@@ -806,11 +807,18 @@ export class DeploymentSystem extends DeployedSystemHelpers {
    */
   async addOperationEntries() {
     if (!this.signer) throw new Error('No signer set')
+
     if (!this.deployedSystem.OperationsRegistry) throw new Error('No OperationsRegistry deployed')
     const operationsRegistry = new OperationsRegistry(
       this.deployedSystem.OperationsRegistry.contract.address,
       this.signer,
     )
+
+    // this was used to deplo to actual mainnet
+    // const operationsRegistry = new OperationsRegistry(
+    //   '0xEfC6425aD281E40c2734BdD823E3abbD444141b3',
+    //   this.signer,
+    // )
 
     let network = this.network
     if (this.forkedNetwork) {

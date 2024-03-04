@@ -7,6 +7,7 @@ export function getAaveCloseV2OperationDefinition(network: Network) {
 
   return {
     name: OPERATION_NAMES.aave.v2.CLOSE_POSITION,
+    log: true,
     actions: [
       {
         hash: getActionHash(SERVICE_REGISTRY_NAMES.common.TAKE_A_FLASHLOAN),
