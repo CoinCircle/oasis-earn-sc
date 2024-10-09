@@ -57,6 +57,7 @@ export type WithProtocolData = {
 
 type WithSlippage = {
   slippage: BigNumber
+  fee?: BigNumber
 }
 
 export type WithDeposit = {

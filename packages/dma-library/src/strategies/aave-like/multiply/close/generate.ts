@@ -45,7 +45,8 @@ export async function generate(
     currentPosition.category,
   )
 
-  const fee = feeResolver(args.collateralToken.symbol, args.debtToken.symbol)
+  const fee = args.fee ||
+    feeResolver(args.collateralToken.symbol, args.debtToken.symbol)
 
   const postSwapFee =
     collectFeeFrom === 'targetToken' ? calculateFee(swapData.toTokenAmount, fee.toNumber()) : ZERO

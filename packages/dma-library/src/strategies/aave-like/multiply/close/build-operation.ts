@@ -25,7 +25,7 @@ export async function buildOperation(
     debtToken: { address: debtTokenAddress },
   } = args
 
-  const fee = feeResolver(args.collateralToken.symbol, args.debtToken.symbol)
+  const fee = args.fee || feeResolver(args.collateralToken.symbol, args.debtToken.symbol)
   const collateralAmountToBeSwapped = args.shouldCloseToCollateral
     ? swapData.fromTokenAmount.plus(swapData.preSwapFee)
     : dependencies.currentPosition.collateral.amount
